@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+            |-----handy-ruler------------------------------------------------------|
+IntelOneMono: IntelOneMono (expressive monospaced font family)
+IntelOneMono:
+IntelOneMono: Intel One Mono, an expressive monospaced font family that's built
+IntelOneMono: with clarity, legibility, and the needs of developers in mind.
+IntelOneMono: It's easier to read, and available for free, with an open-source
+IntelOneMono: font license. Identifying the typographically underserved low-vision
+IntelOneMono: developer audience, Frere-Jones Type designed the Intel One Mono
+IntelOneMono: typeface in partnership with the Intel Brand Team and VMLY&R, for
+IntelOneMono: maximum legibility to address developers' fatigue and eyestrain and
+IntelOneMono: reduce coding errors. A panel of low-vision and legally blind
+IntelOneMono: developers provided feedback at each stage of design.
