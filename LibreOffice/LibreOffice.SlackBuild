@@ -1,0 +1,259 @@
+#!/bin/bash
+#
+# ex:set ai shiftwidth=4 inputtab=spaces smarttab noautotab:
+
+# Slackware build script for LibreOffice
+
+# Copyright 2015-2024 Christoph Willing  Sydney, Australia
+# All rights reserved.
+#
+# Redistribution and use of this script, with or without modification, is
+# permitted provided that the following conditions are met:
+#
+# 1. Redistributions of this script must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#
+#  THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED
+#  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+#  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO
+#  EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+#  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+#  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+#  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+#  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+#  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+cd $(dirname $0) ; CWD=$(pwd)
+
+PRGNAM=LibreOffice
+SRCNAM=libreoffice
+VERSION=${VERSION:-24.8.4.2}
+SHORT_VERSION=${VERSION%.*.*}
+BUILD=${BUILD:-1}
+TAG=${TAG:-_SBo}
+PKGTYPE=${PKGTYPE:-tgz}
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i586 ;;
+    arm*) ARCH=arm ;;
+       *) ARCH=$( uname -m ) ;;
+  esac
+fi
+
+if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
+  echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
+  exit 0
+fi
+
+TMP=${TMP:-/tmp/SBo}
+PKG=$TMP/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+
+if [ "$ARCH" = "i586" ]; then
+  SLKCFLAGS="-O2 -march=i586 -mtune=i686"
+  LIBDIRSUFFIX=""
+elif [ "$ARCH" = "i686" ]; then
+  SLKCFLAGS="-O2 -march=i686 -mtune=i686"
+  LIBDIRSUFFIX=""
+elif [ "$ARCH" = "x86_64" ]; then
+  SLKCFLAGS="-O2 -fPIC"
+  LIBDIRSUFFIX="64"
+else
+  SLKCFLAGS="-O2"
+  LIBDIRSUFFIX=""
+fi
+
+export CC=/usr/bin/gcc
+export CXX=/usr/bin/g++
+
+set -e
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $OUTPUT
+cd $TMP
+rm -rf $SRCNAM-$VERSION
+tar xvf $CWD/$SRCNAM-$VERSION.tar.xz
+cd $SRCNAM-$VERSION
+
+chown -R root:root .
+find -L . \
+ \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
+  -o -perm 511 \) -exec chmod 755 {} \; -o \
+ \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
+  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+
+./configure \
+    CFLAGS="$SLKCFLAGS" \
+    CXXFLAGS="$SLKCFLAGS $CXXCLANGFLAGS" \
+    LDFLAGS="-lz" \
+    NSS_CFLAGS="$(pkg-config --cflags-only-I mozilla-nss)"\
+    --prefix=/usr   \
+    --mandir=/usr/man \
+    --docdir=/usr/doc/$PRGNAM-$VERSION \
+    --libdir=/usr/lib$LIBDIRSUFFIX \
+    --sysconfdir=/etc \
+    --build=$ARCH-slackware-linux \
+    --host=$ARCH-slackware-linux \
+    --with-vendor="Just Another Slacker" \
+	 --disable-atspi-tests \
+	 --disable-avahi \
+	 --disable-breakpad \
+	 --disable-ccache \
+    --disable-crashdump \
+	 --disable-coinmp \
+    --disable-cups \
+	 --disable-cve-tests \
+	 --disable-dbgutil \
+    --disable-dbus \
+    --disable-dconf \
+	 --disable-dependency-tracking \
+	 --disable-ext-nlpsolver \
+	 --disable-ext-numbertext \
+	 --disable-ext-wiki-publisher \
+	 --disable-extension-update \
+    --disable-firebird-sdbc \
+	 --disable-formula-logger \
+	 --disable-fuzzers \
+	 --disable-gdb-index \
+    --disable-gstreamer-1-0 \
+    --disable-gtk3 \
+	 --disable-gtk3-kde5 \
+	 --disable-gtk4 \
+	 --disable-hardening-flags \
+	 --disable-icecream \
+	 --disable-introspection \
+	 --disable-kf5 \
+	 --disable-kf6 \
+    --disable-largefile \
+    --disable-ldap \
+	 --disable-libcmis \
+	 --disable-librelogo \
+    --disable-lotuswordpro \
+	 --disable-lpsolve \
+	 --disable-mariadb-sdbc \
+    --disable-odk \
+	 --disable-online-update \
+	 --disable-online-update-mar \
+	 --disable-opencl \
+	 --disable-pdfium \
+    --disable-postgresql-sdbc \
+    --disable-qt5 \
+	 --disable-qt6 \
+	 --disable-qt6-multimedia \
+	 --disable-randr \
+    --disable-report-builder \
+	 --disable-sdremote \
+	 --disable-sdremote-bluetooth \
+    --disable-scripting-beanshell \
+    --disable-scripting-javascript \
+	 --disable-symbols \
+	 --disable-zxing \
+	 --enable-cairo-canvas \
+	 --enable-curl \
+	 --enable-eot \
+    --enable-gio \
+	 --enable-ld=gold \
+    --enable-lto \
+	 --enable-optimized=O2 \
+	 --enable-pdfimport \
+    --enable-python=no \
+    --enable-release-build=yes \
+	 --without-buildconfig-recorded \
+	 --without-coredumpctl \
+	 --without-export-validation \
+    --without-fonts \
+	 --without-galleries \
+    --without-gssapi \
+    --without-help \
+	 --without-helppack-integration \
+    --without-java \
+    --without-junit \
+	 --without-keep-awake \
+    --without-krb5 \
+    --without-lxml \
+    --without-myspell-dicts \
+	 --without-omindex \
+	 --without-onedrive-client-id \
+	 --without-strawberry-perl-portable \
+	 --without-symbol-config \
+    --without-system-poppler \
+	 --without-templates \
+	 --without-valgrind \
+	 --without-webdav \
+	 --without-wsl-command \
+	 --with-compat-oowrappers \
+    --with-parallelism=3 \
+    --with-system-apr \
+    --with-system-bluez \
+    --with-system-boost \
+    --with-system-bzip2 \
+    --with-system-cairo \
+    --with-system-clucene \
+    --with-system-curl \
+    --with-system-dicts \
+    --with-system-epoxy \
+    --with-system-expat \
+    --with-system-gpgmepp \
+    --with-system-graphite \
+    --with-system-harfbuzz \
+    --with-system-hunspell \
+    --with-system-icu \
+    --with-system-jpeg \
+    --with-system-lcms2 \
+    --with-system-libatomic_ops \
+    --with-system-libodfgen \
+    --with-system-libpng \
+    --with-system-librevenge \
+    --with-system-libtiff \
+    --with-system-libvisio \
+    --with-system-libwebp \
+    --with-system-libwpd \
+    --with-system-libwpg \
+    --with-system-libxml \
+    --with-system-neon \
+    --with-system-nss \
+    --with-system-odbc \
+    --with-system-openldap \
+    --with-system-openssl \
+    --with-system-postgresql \
+    --with-system-sane \
+    --with-system-serf \
+    --with-system-zlib \
+    --with-tls="nss" \
+    --with-x
+
+#    --with-system-redland \
+
+patch -p0 < $CWD/no-check-if-root.diff
+
+# GCC10 requirements (Tx alienBOB)
+sed -i external/libebook/ExternalProject_libebook.mk \
+    -e '/configure /i \\t\t&& sed -i "s/TRUE/true/g" src/lib/EBOOKCharsetConverter.cpp \\'
+
+make build
+make distro-pack-install DESTDIR=$PKG
+
+find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
+  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+
+cd $PKG/usr/lib$LIBDIRSUFFIX
+mv $SRCNAM  $SRCNAM-$VERSION
+ln -s $SRCNAM-$VERSION $SRCNAM
+cd -
+
+for df in $PKG/usr/lib$LIBDIRSUFFIX/$SRCNAM-$VERSION/share/xdg/*.desktop ; do
+    sed -i -e "s/libreofficedev$SHORT_VERSION/libreoffice/g" $df
+done
+
+mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a COPYING* README* $PKG/usr/doc/$PRGNAM-$VERSION
+cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+
+mkdir -p $PKG/install
+cat $CWD/slack-desc > $PKG/install/slack-desc
+cat $CWD/doinst.sh > $PKG/install/doinst.sh
+
+cd $PKG
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

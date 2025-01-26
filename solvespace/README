@@ -1,0 +1,25 @@
+solvespace (parametric 2d/3d CAD tool)
+
+SolveSpace is a free and open-source 2D/3D constraint-based parametric
+computer-aided design (CAD) software that supports basic 2D and 3D
+constructive solid geometry modeling.
+
+It is possible to export models as a whole or in part to various
+formats such as PDF, SVG, or Encapsulated PostScript (EPS).
+
+It was initially created by Jonathan Westhues and as of 2022 is
+maintained by a community of volunteers.
+
+
+The instructions for building SolveSpace don't provide a way to do it
+without clonning it from their repositry:
+
+https://github.com/solvespace/solvespace/?tab=readme-ov-file#via-source-code
+
+You can download the .tar.gz file from the repository releases, but
+it fails to build, because with it you cannot do the needed command:
+
+git submodule update --init
+
+So, this slackbuild clones the SolveSpace repository and checkouts
+the 3.1 version.
