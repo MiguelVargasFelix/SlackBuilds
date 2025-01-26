@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+          |-----handy-ruler------------------------------------------------------|
+cm-unicode: cm-unicode (Computer Modern Unicode OTF fonts)
+cm-unicode:
+cm-unicode: Computer Modern Unicode fonts were converted from metafont sources
+cm-unicode: using mftrace with autotrace backend and fontforge. Their main purpose
+cm-unicode: is to create free good quality fonts for use in X applications
+cm-unicode: supporting many languages.
+cm-unicode: Computer Modern is the original family of typefaces used by the
+cm-unicode: typesetting program TeX. It was created by Donald Knuth with his
+cm-unicode: Metafont program, and was most recently updated in 1992.
+cm-unicode: Computer Modern, or variants of it, remains very widely used in
+cm-unicode: scientific publishing.

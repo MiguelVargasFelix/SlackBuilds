@@ -1,0 +1,11 @@
+cm-unicode (Computer Modern Unicode OTF fonts)
+
+Computer Modern Unicode fonts were converted from metafont sources
+using mftrace with autotrace backend and fontforge. Their main purpose
+is to create free good quality fonts for use in X applications
+supporting many languages.
+Computer Modern is the original family of typefaces used by the
+typesetting program TeX. It was created by Donald Knuth with his
+Metafont program, and was most recently updated in 1992.
+Computer Modern, or variants of it, remains very widely used in
+scientific publishing.
